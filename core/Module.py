@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 
 class Module(ABC):
+    priority = 0
 
     def get_priority(self):
         raise NotImplementedError("An operation is not implemented.")

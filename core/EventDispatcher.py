@@ -1,6 +1,7 @@
 import threading
 import time
 from core.CommandFactory import *
+from core.ModulePriority import *
 from core.ModuleLoader import *
 from core.Voice import *
 from core.Utils import *
@@ -13,10 +14,13 @@ class EventDispatcher:
         self.keywords = None
         self.queue = Queue()
         self.cmdFactory = CommandFactory()
-        self.custom_modules = ModuleLoader().load()
+
+        all_modules = ModuleLoader().load()
+        modules_priority = ModulePriority(all_modules)
+
+        self.custom_modules = modules_priority.get_modules()
 
         self.notification()
-        # self.listen()
 
 
     def command(self, keywords):
@@ -35,7 +39,6 @@ class EventDispatcher:
                 module = handlers[selected_option]
 
             say('launching {}...'.format(get_class_name(module)), time=True)
-            # self.queue.put([module, 'start', keyword])
             module.start(self.keywords)
             say('Ready.')
 
