@@ -6,6 +6,8 @@ from core.Utils import *
 class Time(Module):
     priority = 1000
 
+    disable = False
+
     def __init__(self):
         self.keywords = ['Time', 'clock', 'date', 'today']
 
