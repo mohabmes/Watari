@@ -10,7 +10,7 @@ class Brain:
 
         while 1:
             cmd = input('>>> ')
-            if cmd is not "":
+            if cmd != "":
                 event_dispatch.command(cmd)
 
 
