@@ -1,38 +1,60 @@
-import os
+import pyttsx3
 import os.path
-import logging
 from gtts import gTTS
 from core.Utils import *
+from mpyg321.mpyg321 import MPyg321Player
+
 
 class Voice:
+    def __init__(self):
+        if is_win():
+            self.engine = VoiceWin()
+        elif is_linux():
+            self.engine = VoiceLinux()
+        else:
+            self.engine = VoiceNotSupported()
+
+    def say(self, speech):
+        self.engine.say(speech)
+
+
+class VoiceWin:
+    def __init__(self, rate=100):
+        self.rate = rate
+
+    def say(self, speech):
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', self.rate)
+        self.engine.say(speech)
+        self.engine.runAndWait()
+
+
+class VoiceLinux:
 
     MAIN_DIR = "data/audio"
-
-    def setStr(self, text):
-        self.text = text
-
-    def getStr(self, text):
-        return self.text
 
     def savefile(self, filename):
         self.engine.save(filename)
 
     def play(self, filepath):
-        os.system("mpg321 -q {}".format(filepath))
+        player = MPyg321Player()
+        player.play_song(filepath)
 
-    def say(self, text):
-        try:
+    def say(self, speech):
+        filename = cleanStr(speech)
+        filepath = "{}/{}.mp3".format(self.MAIN_DIR, cleanStr(filename))
 
-            self.setStr(text)
-            filename = cleanStr(self.text)
-            filepath = "{}/{}.mp3".format(self.MAIN_DIR, cleanStr(filename))
+        if os.path.isfile(filepath):
+            self.play(filepath)
+        else:
+            self.engine = gTTS(text=speech, lang='en-uk', slow=False)
+            self.savefile(filepath)
+            self.play(filepath)
 
-            if os.path.isfile(filepath):
-                self.play(filepath)
-            else:
-                self.engine = gTTS(text=self.text, lang='en-uk', slow=False)
-                self.savefile(filepath)
-                self.play(filepath)
 
-        except Exception as e:
-            display_error(e)
+class VoiceNotSupported:
+    def __init__(self):
+        self.warning_print = False
+
+    def say(self, speech):
+        print("Speech not supported! Please install pyttsx3 or mpyg321 text-to-speech engine")

@@ -1,3 +1,14 @@
+import sys
+
+def is_mac():
+    return sys.platform == 'darwin'
+
+def is_win():
+    return sys.platform == 'win32'
+
+def is_linux():
+    return sys.platform == 'linux'
+
 def get_class_name(class_name):
     return class_name.__class__.__name__
 
@@ -63,7 +74,7 @@ def multi_choice_dialog(choices):
     return int(selected_option)
 
 
-def p(str):
+def print_w_time(str):
     import datetime
     x = datetime.datetime.now()
     x = x.strftime("%Y:%m:%d %H:%M")
@@ -74,13 +85,11 @@ def p(str):
 def cleanStr(str):
     return ''.join(e for e in str if e.isalnum()).lower()
 
-def say(str, time=False, EL=False):
+def say(str, time=False):
     import core.Voice as v
 
     if time:
-        p(str)
-    elif EL:
-        print(str, end=EL)
+        print_w_time(str)
     else:
         print(str)
 
