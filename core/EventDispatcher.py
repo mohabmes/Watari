@@ -3,24 +3,19 @@ import time
 from core.CommandFactory import *
 from core.ModulePriority import *
 from core.ModuleLoader import *
-from core.Voice import *
 from core.Utils import *
-from queue import Queue
 
 
 class EventDispatcher:
 
     def __init__(self):
         self.keywords = None
-        self.queue = Queue()
         self.cmdFactory = CommandFactory()
 
         all_modules = ModuleLoader().load()
         modules_priority = ModulePriority(all_modules)
 
         self.custom_modules = modules_priority.get_modules()
-
-        self.notification()
 
 
     def command(self, keywords):
@@ -38,9 +33,9 @@ class EventDispatcher:
                 selected_option = multi_choice_dialog(choices)
                 module = handlers[selected_option]
 
-            say('launching {}...'.format(get_class_name(module)), time=True)
+            # say('launching {}...'.format(get_class_name(module)), time=True)
             module.start(self.keywords)
-            say('Ready.')
+            # say('Ready.')
 
         except Exception as e:
             display_error(e)
@@ -49,7 +44,7 @@ class EventDispatcher:
         while 1:
             time.sleep(60*30)
             for module in self.custom_modules:
-                response = module().loop("")
+                response = module().loop()
                 if response:
                     print('\n# {}: '.format(get_class_name(module())), end="")
                     say(response)
