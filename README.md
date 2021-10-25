@@ -33,6 +33,3 @@ class CustomModule(Module):
 ## Read additional configs
 - To read the additional config array of a certain custom module use `get_config()` specified in `config/config.json` file.
 
-### Requiement
-- numpy
-- gtts
