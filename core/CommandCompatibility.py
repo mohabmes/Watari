@@ -3,13 +3,14 @@ from . import Utils
 
 class CommandCompatibility:
 
-    def check(self, sent, target = []):
+    def check(self, sent, target=[]):
         for keyword in target:
 
             keyword = keyword.lower()
             sent = sent.lower()
 
-            if Utils.MED(keyword, sent) < 4:
+            med = Utils.min_edit_distance(keyword, sent)
+            if (len(sent) > 7 and med < 3) or (med < 2):
                 return True
 
         return False

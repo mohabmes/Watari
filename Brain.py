@@ -6,7 +6,7 @@ class Brain:
 
     def __init__(self):
         event_dispatch = EventDispatcher()
-        say("Watari Listening: ")
+        event_dispatch.notification()
 
         while 1:
             cmd = input('>>> ')
@@ -14,4 +14,5 @@ class Brain:
                 event_dispatch.command(cmd)
 
 
-Brain()
+if __name__ == '__main__':
+    Brain()

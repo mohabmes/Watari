@@ -1,7 +1,7 @@
 {
-	"ModuleName":[
-		{
-			"key":"value"
-		}
-	]
+	"Time": {
+		"date_format": "%B %d %Y",
+		"time_format": "%I:%M"
+	}
+
 }

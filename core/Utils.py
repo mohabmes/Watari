@@ -28,12 +28,11 @@ def is_class(class_obj):
 
 
 def display_error(error_message):
-    print('******** Couldn\'t Complete the operation. ********')
-    print('ERROR: {}. '.format(str(error_message)))
+    print('\x1b[0;30;41m' + 'ERROR!' + '\x1b[0m {}.'.format(str(error_message)))
 
 
 # Levenshtein Minimum Edit Distance
-def MED(A, B):
+def min_edit_distance(A, B):
     import numpy
 
     m = len(A)
@@ -69,7 +68,7 @@ def multi_choice_dialog(choices):
         try:
             selected_option = int(input("Select an option: "))
         except Exception as e:
-            print('****** ERROR: {}. ******'.format(str(e)))
+            display_error(str(e))
 
     return int(selected_option)
 
