@@ -1,5 +1,3 @@
-from core.CommandCompatibility import *
-from operator import methodcaller, itemgetter
 
 
 class ModulePriority:
@@ -7,9 +5,9 @@ class ModulePriority:
     def __init__(self, custom_modules):
         self.modules = custom_modules
         self.sort_by_priority()
-        self.remove_disabled()
+        # self.remove_disabled()
 
-    def get_modules(self):
+    def get(self):
         return self.modules
 
     def sort_by_priority(self):

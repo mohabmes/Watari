@@ -1,7 +1,7 @@
 import inspect
 import importlib
-from core.Utils import *
 from core.Module import *
+from core.ModulePriority import *
 
 
 class ModuleLoader:
@@ -22,4 +22,5 @@ class ModuleLoader:
                     count += 1
 
         print("Loaded {} Modules \n".format(count))
-        return self.custom_modules
+
+        return ModulePriority(self.custom_modules).get()

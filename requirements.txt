@@ -3,3 +3,5 @@ numpy
 pyttsx3
 mpyg321
 psutil
+importlib
+inspect

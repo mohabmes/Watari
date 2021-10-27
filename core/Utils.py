@@ -93,4 +93,3 @@ def say(str, time=False):
         print(str)
 
     v.Voice().say(str)
-

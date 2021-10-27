@@ -1,5 +1,10 @@
 {
+	"system_config": {
+		"notify_mode": true,
+		"notify_interval": 10
+	},
 	"Time": {
+		"notify_mode": true,
 		"date_format": "%B %d %Y",
 		"time_format": "%I:%M"
 	}

@@ -1,22 +1,17 @@
-import threading
-import time
 from core.CommandFactory import *
 from core.ModulePriority import *
 from core.ModuleLoader import *
-from core.Utils import *
-
+from core.Notify import *
 
 class EventDispatcher:
 
     def __init__(self):
         self.keywords = None
         self.cmdFactory = CommandFactory()
+        self.custom_modules = ModuleLoader().load()
 
-        all_modules = ModuleLoader().load()
-        modules_priority = ModulePriority(all_modules)
-
-        self.custom_modules = modules_priority.get_modules()
-
+    def get_modules(self):
+        return self.custom_modules
 
     def command(self, keywords):
         try:
@@ -39,16 +34,3 @@ class EventDispatcher:
 
         except Exception as e:
             display_error(e)
-
-    def module_loop(self):
-        while 1:
-            time.sleep(60*30)
-            for module in self.custom_modules:
-                response = module().loop()
-                if response:
-                    print('\n# {}: '.format(get_class_name(module())), end="")
-                    say(response)
-
-    def notification(self):
-        notify = threading.Thread(target=self.module_loop, args=())
-        notify.start()

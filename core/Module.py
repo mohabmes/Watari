@@ -1,9 +1,7 @@
-import json
 from abc import ABC, abstractmethod
-from core.Utils import *
+from core.Config import *
 
 class Module(ABC):
-    disable = False
     priority = 0
     keywords = []
 
@@ -17,24 +15,8 @@ class Module(ABC):
         pass
 
     def get_config(self, key=None):
-        try:
-            config = open('config/config.json')
-
-            data = json.load(config)
-            classname = self.__class__.__name__
-
-            if classname in data:
-                if key is None:
-                    return data[classname]
-                elif key in data[classname]:
-                    return data[classname][key]
-                else:
-                    raise Exception('Key \'{}\' is not found'.format(key))
-
-            raise Exception('\'{}\' config is missing'.format(classname))
-
-        except Exception as e:
-            display_error(e)
+        classname = get_class_name(self)
+        return Config().get(classname, key)
 
     @abstractmethod
     def start(self, keyword):

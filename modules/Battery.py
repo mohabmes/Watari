@@ -18,8 +18,8 @@ class Battery(Module):
 
         if percent <= 25 and not plugged:
             return 'The battery is {}% and charger is {}.'.format(str(percent), plugged_str)
-        elif percent <= 95 and plugged:
-            return 'The battery is almost 100% and plug charger out {}.'.format(str(percent), plugged_str)
+        elif percent >= 95 and plugged:
+            return 'The battery is almost 100% and please plug charger out.'.format(str(percent))
 
 
     def start(self, keyword):

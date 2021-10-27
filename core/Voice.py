@@ -15,7 +15,10 @@ class Voice:
             self.engine = VoiceNotSupported()
 
     def say(self, speech):
-        self.engine.say(speech)
+        try:
+            self.engine.say(speech)
+        except Exception as e:
+            display_error(e)
 
 
 class VoiceWin:
